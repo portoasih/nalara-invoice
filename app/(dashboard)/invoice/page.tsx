@@ -115,7 +115,7 @@ export default async function InvoicePage(props: {
                                     </td>
                                 </tr>
                             ) : (
-                                invoices.map((invoice) => (
+                                invoices.map((invoice: any) => (
                                     <tr
                                         key={invoice.id}
                                         className="transition-colors hover:bg-[#ecffdc]/40 group"
