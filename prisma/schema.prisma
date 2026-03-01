@@ -1,0 +1,42 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Student {
+  id             String   @id @default(cuid())
+  name           String
+  jenjang        String
+  type           String
+  kelas          String
+  isLongDistance Boolean  @default(false)
+  invoices       Invoice[]
+  createdAt      DateTime @default(now())
+}
+
+model Pricing {
+  id      String @id @default(cuid())
+  jenjang String
+  type    String
+  price   Int
+
+  @@unique([jenjang, type], name: "jenjang_type")
+}
+
+model Invoice {
+  id                    String   @id @default(cuid())
+  invoiceNumber         String   @unique
+  student               Student  @relation(fields: [studentId], references: [id])
+  studentId             String
+  month                 Int
+  year                  Int
+  sessionCount          Int
+  basePrice             Int
+  transportFee          Int
+  finalPricePerSession  Int
+  total                 Int
+  createdAt             DateTime @default(now())
+}
